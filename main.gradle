@@ -85,4 +85,3 @@ task extractNewestChangelog() {
         println "Extracted newest Changelog to \"extracted.CHANGELOG.md\""
     }
 }
-
