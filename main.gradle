@@ -66,10 +66,6 @@ allprojects {
                 return "${rootProject.archives_base_name} ${rootProject.mod_version}\n==========\nThere was an error generating the changelog" + exception.getLocalizedMessage()
             }
         }
-
-        releaseChangelog = {
-            return releaseChangelog(1)
-        }
     }
 
     java {
@@ -83,7 +79,7 @@ task extractNewestChangelog() {
     delete fileName
     // write changelog
     FileWriter fw = new FileWriter(fileName);
-    fw.write(releaseChangelog());
+    fw.write(releaseChangelog(1));
     fw.close()
     doLast {
         println "Extracted newest Changelog to \"extracted.CHANGELOG.md\""

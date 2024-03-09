@@ -82,7 +82,7 @@ unifiedPublishing {
     project {
         displayName = "$rootProject.minecraft_version-$project.name-$project.version"
         releaseType = "$rootProject.artifact_type"
-        changelog = releaseChangelog()
+        changelog = releaseChangelog(1)
         gameVersions = []
         gameLoaders = ["neoforge"]
         mainPublication remapJar
