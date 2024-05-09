@@ -41,6 +41,12 @@ processResources {
     filesMatching("META-INF/mods.toml") {
         expand mod_meta + [project: project]
     }
+
+    filesMatching("META-INF/neoforge.mods.toml") {
+        expand mod_meta + [project: project]
+    }
+
+    outputs.upToDateWhen{ false }
 }
 
 shadowJar {
