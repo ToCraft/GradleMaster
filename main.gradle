@@ -43,7 +43,7 @@ allprojects {
 
     tasks.withType(JavaCompile).configureEach {
         options.encoding = "UTF-8"
-        options.release = 17
+        options.release = project.hasProperty("java_version") ? Integer.parseInt(project.property("java_version") as String) : 17 as Integer
     }
 
     ext {

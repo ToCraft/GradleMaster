@@ -136,7 +136,7 @@ task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
     mainFile.changelogType = "markdown"
     mainFile.addModLoader("fabric")
     mainFile.addModLoader("quilt")
-    mainFile.addJavaVersion("Java 17")
+    mainFile.addJavaVersion("Java " + project.hasProperty("java_version") ? project.property("java_version") as String : 17)
     mainFile.addRequirement("fabric-api")
     if (!"${project.required_dependencies}".isEmpty()) {
         "${project.required_dependencies}".split(',').each {
