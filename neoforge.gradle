@@ -133,7 +133,7 @@ task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
     mainFile.changelog = releaseChangelog(1)
     mainFile.changelogType = "markdown"
     mainFile.addModLoader("neoforge")
-    mainFile.addJavaVersion("Java " + project.hasProperty("java_version") ? project.property("java_version") as String : 17)
+    mainFile.addJavaVersion("Java " + (project.hasProperty("java_version") ? project.property("java_version") : "17"))
     if (!"${project.required_dependencies}".isEmpty()) {
         "${project.required_dependencies}".split(',').each {
             mainFile.addRequirement("${it}")
