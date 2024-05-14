@@ -107,13 +107,13 @@ modrinth {
     loaders = ["neoforge"]
     changelog = releaseChangelog(1)
     dependencies {
-        if (!"${project.required_dependencies}".isEmpty()) {
-            "${project.required_dependencies}".split(',').each {
+        if (project.hasProperty("required_dependencies") && !project.getProperty("required_dependencies").isEmpty()) {
+            project.getProperty("required_dependencies").split(',').each {
                 required.project "${it}"
             }
         }
-        if (!"${project.optional_dependencies}".isEmpty()) {
-            "${project.optional_dependencies}".split(',').each {
+        if (project.hasProperty("optional_dependencies") && !project.getProperty("optional_dependencies").isEmpty()) {
+            project.getProperty("optional_dependencies").split(',').each {
                 optional.project "${it}"
             }
         }
@@ -134,13 +134,13 @@ task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
     mainFile.changelogType = "markdown"
     mainFile.addModLoader("neoforge")
     mainFile.addJavaVersion("Java " + (project.hasProperty("java_version") ? project.property("java_version") : "17"))
-    if (!"${project.required_dependencies}".isEmpty()) {
-        "${project.required_dependencies}".split(',').each {
+    if (project.hasProperty("required_dependencies") && !project.getProperty("required_dependencies").isEmpty()) {
+        project.getProperty("required_dependencies").split(',').each {
             mainFile.addRequirement("${it}")
         }
     }
-    if (!"${project.optional_dependencies}".isEmpty()) {
-        "${project.optional_dependencies}".split(',').each {
+    if (project.hasProperty("optional_dependencies") && !project.getProperty("optional_dependencies").isEmpty()) {
+        project.getProperty("optional_dependencies").split(',').each {
             mainFile.addOptional("${it}")
         }
     }
