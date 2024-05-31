@@ -54,14 +54,17 @@ allprojects {
             try {
                 String changelog = ""
                 int match = 0
+                String previousIT = ""
                 rootProject.file("CHANGELOG.md").eachLine {
-                    if (it.matches("${rootProject.archives_base_name} [0-9]\\.[0-9]+(\\\\.[0-9]*)?+(\\.[0-9]*)?")) {
+                    if (it.contains("================")) {
                         match++
+                        //changelog += previousIT
                     }
                     if (match <= versions) {
-                        changelog += it + "\n"
-                    } else
-                        return
+                        changelog += previousIT + "\n"
+                    }
+                    previousIT = it
+                    return
                 }
                 return changelog + "\n\n"
             } catch (exception) {
