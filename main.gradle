@@ -114,51 +114,51 @@ def discordChangelog() {
 }
 
 // based on the code by Flemmli97
-task discordRelease() {
-    try {
-        def webhook = new Webhook(findProperty('web_hook_url') as String, "${rootProject.name} Upload")
-
-        def message = new Message()
-        message.setUsername("Mod Release")
-        def content = "${rootProject.name} ${project.mod_version} has been released!"
-        if (project.hasProperty("ping_role")) {
-            content = "<@&${project.getProperty("ping_role")}> " + content
-        }
-        message.setContent(content)
-        message.setAvatarUrl("https://avatars.githubusercontent.com/u/38883321")
-
-        def embed = new Embed()
-
-        def changelog = discordChangelog()
-        if (changelog.size() == 1)
-            embed.addField('Change Log', "```md\n${changelog.get(0) ?: 'Unavailable :('}```", false)
-        else
-            changelog.forEach {
-                embed.addField("Change Log", "```md\n${it}```", false)
-            }
-        embed.setColor(0xFF8000)
-        message.addEmbed(embed)
-
-        webhook.sendMessage(message)
-    }
-
-    catch (IOException ignored) {
-        println 'Failed to push to the Discord webhook.'
-    }
+task discordRelease {
     doLast {
+        try {
+            def webhook = new Webhook(findProperty('web_hook_url') as String, "${rootProject.name} Upload")
+
+            def message = new Message()
+            message.setUsername("Mod Release")
+            def content = "${rootProject.name} ${project.mod_version} has been released!"
+            if (project.hasProperty("ping_role")) {
+                content = "<@&${project.getProperty("ping_role")}> " + content
+            }
+            message.setContent(content)
+            message.setAvatarUrl("https://avatars.githubusercontent.com/u/38883321")
+
+            def embed = new Embed()
+
+            def changelog = discordChangelog()
+            if (changelog.size() == 1)
+                embed.addField('Change Log', "```md\n${changelog.get(0) ?: 'Unavailable :('}```", false)
+            else
+                changelog.forEach {
+                    embed.addField("Change Log", "```md\n${it}```", false)
+                }
+            embed.setColor(0xFF8000)
+            message.addEmbed(embed)
+
+            webhook.sendMessage(message)
+        }
+
+        catch (IOException ignored) {
+            println 'Failed to push to the Discord webhook.'
+        }
         println "Send Changelog to Discord."
     }
 }
 
-task extractNewestChangelog() {
+task extractNewestChangelog {
     String fileName = "extracted.CHANGELOG.md";
     // delete file if exists
     delete fileName
-    // write changelog
-    FileWriter fw = new FileWriter(fileName);
-    fw.write(releaseChangelog(1));
-    fw.close()
     doLast {
+        // write changelog
+        FileWriter fw = new FileWriter(fileName);
+        fw.write(releaseChangelog(1));
+        fw.close()
         println "Extracted newest Changelog to \"extracted.CHANGELOG.md\""
     }
 }
