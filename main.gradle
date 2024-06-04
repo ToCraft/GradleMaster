@@ -117,7 +117,7 @@ def discordChangelog() {
 task discordRelease {
     doLast {
         try {
-            def webhook = new Webhook(findProperty('web_hook_url') as String, "${rootProject.name} Upload")
+            def webhook = new Webhook(System.getenv("DISCORD_WEB_HOOK"), "${rootProject.name} Upload")
 
             def message = new Message()
             message.setUsername("Mod Release")
