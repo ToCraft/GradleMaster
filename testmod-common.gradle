@@ -1,0 +1,10 @@
+architectury {
+    common(rootProject.enabled_platforms.split("," as String))
+}
+
+dependencies {
+    implementation project(path: ":common", configuration: "namedElements")
+
+    // used for @Environment & EnvType
+    modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
+}
