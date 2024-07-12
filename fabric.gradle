@@ -32,8 +32,8 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${parent.fabric_loader}"
     modApi "net.fabricmc.fabric-api:fabric-api:${parent.props.fabric}+${parent.name}"
 
-    common(project(path: ":$parent.name:common", configuration: "namedElements")) { transitive = false }
-    shadowCommon(project(path: ":$parent.name:common", configuration: "transformProductionFabric")) { transitive = false }
+    common(project(path: ":${parent.name}:common", configuration: "namedElements")) { transitive = false }
+    shadowCommon(project(path: ":${parent.name}:common", configuration: "transformProductionFabric")) { transitive = false }
 }
 
 processResources {
@@ -65,7 +65,7 @@ jar {
 }
 
 sourcesJar {
-    def commonSources = project(":$parent.name:common").sourcesJar
+    def commonSources = project(":${parent.name}:common").sourcesJar
     dependsOn commonSources
     from commonSources.archiveFile.map { zipTree(it) }
 }
@@ -80,7 +80,7 @@ publishing {
     publications {
         mavenFabric(MavenPublication) {
             artifactId = parent.archivesBaseName + "-$project.name"
-            version = parent.name + "-" + rootProject.mod_version
+            version = parent.name + "-" + parent.mod_version
             from components.java
         }
     }
@@ -129,9 +129,9 @@ task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
     apiToken = System.getenv("CURSEFORGE_TOKEN")
 
     // The main file to upload
-    def mainFile = upload("${rootProject.curseforge_id}".toString(), remapJar)
+    def mainFile = upload("${parent.curseforge_id}".toString(), remapJar)
     mainFile.displayName = "$parent.name-$project.name-$project.version"
-    mainFile.releaseType = "$rootProject.artifact_type"
+    mainFile.releaseType = "$parent.artifact_type"
     mainFile.changelog = releaseChangelog(1)
     mainFile.changelogType = "markdown"
     mainFile.addModLoader("fabric")
@@ -152,4 +152,8 @@ task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
     mainFile.withAdditionalFile(jar)
 
     parent.supported_versions.each { mainFile.addGameVersion(it.trim()) }
+}
+
+loom {
+    accessWidenerPath = project(":${parent.name}:common").loom.accessWidenerPath
 }

@@ -6,7 +6,7 @@ buildscript {
     }
     dependencies {
         classpath group: 'com.diluv.schoomp', name: 'Schoomp', version: '1.2.6+'
-        classpath "dev.tocraft:preprocessor:0.51-SNAPSHOT"
+        classpath "dev.tocraft:preprocessor:0.74-SNAPSHOT"
     }
 }
 
@@ -61,7 +61,6 @@ subprojects {
     apply plugin: "dev.tocraft.preprocessor"
 
     preprocess {
-        //sources = sourceSets.main.java.srcDirs
         vars.put("MC", project.props.mc_id != null ? project.props.mc_id : project.name.replaceAll(".", ""))
     }
 
