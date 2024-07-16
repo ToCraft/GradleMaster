@@ -110,7 +110,7 @@ allprojects {
                 String changelog = ""
                 int match = 0
                 String previousIT = ""
-                project.file("CHANGELOG.md").eachLine {
+                rootProject.file("CHANGELOG.md").eachLine {
                     if (it.contains("================")) {
                         match++
                         //changelog += previousIT
