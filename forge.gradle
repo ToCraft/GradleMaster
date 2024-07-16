@@ -106,7 +106,7 @@ modrinth {
     uploadFile = remapJar
     gameVersions = []
     loaders = ["forge"]
-    changelog = releaseChangelog(1)
+    changelog = rootProject.ext.releaseChangelog
     dependencies {
         if (project.hasProperty("required_dependencies") && !project.getProperty("required_dependencies").isEmpty()) {
             project.getProperty("required_dependencies").split(',').each {
@@ -130,7 +130,7 @@ task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
     def mainFile = upload("${rootProject.curseforge_id}".toString(), remapJar)
     mainFile.displayName = "$parent.name-$project.name-$project.version"
     mainFile.releaseType = "$rootProject.artifact_type"
-    mainFile.changelog = releaseChangelog(1)
+    mainFile.changelog = rootProject.ext.releaseChangelog
     mainFile.changelogType = "markdown"
     mainFile.addModLoader("forge")
     mainFile.addJavaVersion("Java ${parent.props.java}")

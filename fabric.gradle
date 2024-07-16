@@ -107,7 +107,7 @@ modrinth {
     uploadFile = remapJar
     gameVersions = []
     loaders = ["fabric", "quilt"]
-    changelog = releaseChangelog(1)
+    changelog = rootProject.ext.releaseChangelog
     dependencies {
         required.project "fabric-api"
         if (project.hasProperty("required_dependencies") && !project.getProperty("required_dependencies").isEmpty()) {
@@ -132,7 +132,7 @@ task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
     def mainFile = upload("${parent.curseforge_id}".toString(), remapJar)
     mainFile.displayName = "$parent.name-$project.name-$project.version"
     mainFile.releaseType = "$parent.artifact_type"
-    mainFile.changelog = releaseChangelog(1)
+    mainFile.changelog = rootProject.ext.releaseChangelog
     mainFile.changelogType = "markdown"
     mainFile.addModLoader("fabric")
     mainFile.addModLoader("quilt")
