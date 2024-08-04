@@ -144,8 +144,6 @@ task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
             mainFile.addOptional("${it}")
         }
     }
-    mainFile.withAdditionalFile(sourcesJar)
-    mainFile.withAdditionalFile(jar)
 
     parent.supported_versions.each { mainFile.addGameVersion(it.trim()) }
 }
